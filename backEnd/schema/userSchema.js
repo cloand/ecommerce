@@ -1,0 +1,62 @@
+const mongoose = require('mongoose')
+
+const userSchema =new mongoose.Schema({
+    _id:{
+        type:Number,
+        required:true
+    },
+    name:{
+        type:String,
+        required:true
+    },
+    userId:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    img:{
+        type:[String],
+        required:true
+    },
+    age:{
+        type:Number,
+        required:true
+    },
+    gender:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    phone:{
+        type:Number,
+        required:true
+    },
+    shippingAddress:{
+        type:[String],
+        required:true
+    },
+    billingAddress:{
+        type:[String],
+        required:true
+    },
+    date:{
+        type:String,
+        required:true
+    },
+    cart:{
+        type:[Object],
+        required:true
+    },
+    order:{
+        type:[Object],
+        required:true
+    }
+})
+
+module.exports = mongoose.model('user',userSchema,'user')
