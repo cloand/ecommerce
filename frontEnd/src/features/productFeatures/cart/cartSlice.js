@@ -78,7 +78,7 @@ const cartSlice = createSlice({
         },
         decreamentCount:(cartItems,{payload}) => {
             cartItems.items.forEach((item)=>{
-                if(item.item._id === payload.item._id && item.itemCount > 0){
+                if(getId(item) === getId(payload) && item.itemCount > 0){
                     item.itemCount -= 1;
                     item.count -= 1
                     let values = JSON.parse(localStorage.getItem(getId(item)));
@@ -87,7 +87,7 @@ const cartSlice = createSlice({
                     localStorage.setItem(getId(item),JSON.stringify(values));
                 }
                 if(item.item._id === payload.item._id && item.itemCount === 0){
-                    cartItems.items = cartItems.items.filter((item) => item.item._id !== payload.item._id);
+                    cartItems.items = cartItems.items.filter((item) => getId(item) !== getId(payload));
                     localStorage.removeItem(getId(item))
                 }
             })

@@ -2,11 +2,12 @@ import StyledComponents from "styled-components";
 
 export const SingleLink = StyledComponents.div`
     padding-right:.7em;
-    color:black;
+    color:${({i,currentActive}) => i === currentActive ? "blue" : "black"};
     transition:all .5s ease;
-    &:hover{
+    &:focus,&:hover,&:active{
         color:blue;
     }
+
     `;
 
 export const OuterDiv = StyledComponents.div`
@@ -25,7 +26,7 @@ display:flex;
 
 export const WithoutArrow = StyledComponents.div`
 padding-right:2.1em;
-color:black;
+color:${({i,activeLink}) => i===activeLink ? "blue" : "black"};
 transition:all .5s ease;
     &:hover{
         color:blue;

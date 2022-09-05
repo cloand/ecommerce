@@ -18,7 +18,6 @@ export const useFetch = (url) => {
             setLoading(false)
         )
     },[url])
-
     return [data,loading,error] 
 }
 

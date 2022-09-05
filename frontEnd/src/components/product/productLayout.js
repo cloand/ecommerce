@@ -6,7 +6,7 @@ import {countCounter,changeDropDown,changeCartButton} from '../../features/produ
 import { addItem } from "../../features/productFeatures/cart/cartSlice";
 import { useFetch } from "../../customHooks/useFetch";
 import { getBrands, getImages, getProductsUrl } from "../../constants/url";
-import { changeSelectedImage} from '../../features/productFeatures/extras'
+import { changeQuickView, changeSelectedImage} from '../../features/productFeatures/extras'
 import { useEffect } from "react";
 
 const ProductLayout = () => {
@@ -17,6 +17,11 @@ const ProductLayout = () => {
     const [data] = useFetch(`${getProductsUrl}/${item.item._id}`)
     const [image] = useFetch(`${getImages}/${item.item.image}`)
     const [brand] = useFetch(`${getBrands}/${item.item.brand}`)
+
+    useEffect(()=>{
+        console.log(item)
+    },[])
+
 
     return (
         <>
@@ -102,6 +107,7 @@ const ProductLayout = () => {
                         { <Link to="/cart" style = {item.canAddToCart ? {textDecoration:"none"}:{pointerEvents:"none",textDecoration:"none"}} onClick={
                             () => {
                                 dispatch(addItem(item))
+                                dispatch(changeQuickView(false))
                             }
                         }>
                             

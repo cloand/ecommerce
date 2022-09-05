@@ -42,6 +42,7 @@ const selectedProductSlice = createSlice({
             selectedProduct.itemCount = 0;
         } ,
         changeDropDown:(dropDown,{payload}) => {
+            console.log("check")
             if(!payload){
                 dropDown.sizeDropDown.isOpen = false
                 dropDown.sizeDropDown.value = "Select an Option"

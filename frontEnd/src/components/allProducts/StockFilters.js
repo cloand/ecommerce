@@ -8,13 +8,19 @@ const StockFilters = ({category,type,index}) => {
     // dispatch(sortByTags([type,category]));
     
     const {currentTags} = useSelector((store) => store.products)
+
+    useEffect(()=>{
+        console.log()
+    },[])
+
     return (
+    
         <OuterDiv >
-                {/* {console.log(type)} */}
+             
                 <div>
             <HeadingInput type = "checkbox" id={category} name = {category} checked={currentTags[type][category]} onChange = {() => {
                 dispatch(changeTagChecks([type,category.name ?? category,category._id ?? null]))
-                // dispatch(changeByFilter())
+                
         }}/>
             <Label  for ={category} >{category}</Label>
         </div>

@@ -5,9 +5,18 @@ import Header from "../navHeader";
 import {OuterLayout} from "../../styles/constantLayout"
 import { DivSeperation } from "../../styles/constantLayout";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { changeDropDown } from "../../features/productFeatures/product/selectedProduct";
 
 const ProductSection = () => {
     const {item} = useSelector((store) => store.selectedProduct)
+
+    useEffect(()=>{
+        return () => {
+            changeDropDown(null)
+            console.log("changed")
+        }
+    },[])
 
     return (
         <>

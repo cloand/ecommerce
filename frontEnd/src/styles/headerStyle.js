@@ -33,6 +33,7 @@ export const HeaderLinks = StyledComponents.ul`
     display:flex;
     text-decoration:none;
     justify-content:space-between;
+    align-items:center;
     list-style:none;
     margin:0;
 
@@ -40,6 +41,7 @@ export const HeaderLinks = StyledComponents.ul`
 export const SingleLink = StyledComponents.li`
     // border:2px solid grey;
     display:flex;
+    align-items:center;
     margin-right:1em
 `;
 

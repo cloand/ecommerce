@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "../components/header";
 import SearchBar from "../components/searchBar";
 import NavBar from '../components/navBar'
-import { DivSeperation } from "../styles/constantLayout";
+import { AbsoluteDiv,QuickView ,QuickViewOuter,Product,Helper,QuickViewDiv, DivSeperation } from "../styles/constantLayout";
 import MainBlock from "../components/mainBlock";
 import ShippingSupport from "../components/shippingSupport";
 import CategoriesSection from "../components/categories";
@@ -24,13 +24,19 @@ import right from '../assets/mainImageRight.jpg';
 import left from '../assets/mainDisplay.webp'
 import { useFetch } from "../customHooks/useFetch";
 import { getFeatured, getProductsUrl,getLatest, getCategories } from "../constants/url";
-
+import { changeQuickView } from "../features/productFeatures/extras";
+import { useDispatch, useSelector } from "react-redux";
+import ProductLayout from "../components/product/productLayout";
+import ReactModal from "react-modal";
+import QuickViewModal from "../components/allProducts/quickViewModal";
 
 
 const LandingPage = () => {
     const [featured] = useFetch(`${getProductsUrl}${getFeatured}`)
     const [latest] = useFetch(`${getProductsUrl}${getLatest}`)
     const [categories] = useFetch(`${getCategories}`)
+    const {quickView} = useSelector((store) => store.dropDown)
+    const dispatch = useDispatch();
     const settings = {
         infinite: true,
         dots: true,
@@ -43,15 +49,38 @@ const LandingPage = () => {
 
       useEffect(()=>{
       window.scroll(0,0)
+
+      return () => {
+        dispatch(changeQuickView(false))
+      }
     },[])
 
-    useEffect(()=>{
+    // useEffect(()=>{
       
-    },[featured,categories])
+    // },[featured,categories,quickView])
 
 
     return (
     <>
+    <ReactModal ariaHideApp={true} isOpen={quickView} preventScroll={false} contentLabel = "hello" shouldCloseOnEsc={true} style={{overlay:{
+            background:"none",
+            padding:0,
+            zIndex:2
+        },
+        content:{
+            border:"none",
+            top:"13%",
+            left:"13%",
+            right:"13%",
+            bottom:"13%",
+            border:"2px solid black",
+            padding:"1em",
+            margin:"0",
+        }
+        }}>
+            <QuickViewModal />
+        </ReactModal>
+        {/* <Helper isQuickView = {quickView}> */}
         <Header />
         <DivSeperation width={0.1}/>
         <SearchBar/>
@@ -70,6 +99,21 @@ const LandingPage = () => {
         <Brands />
         <TopProducts />
         <Footer />
+        {/* </Helper> */}
+        {/* {quickView && <>
+                            <QuickView isQuickView = {quickView} top = {window.pageYOffset}>
+                                <QuickViewDiv>
+                                        <QuickViewOuter className="material-symbols-outlined" onClick={()=>{
+                                            dispatch(changeQuickView(false))
+                                        }}>
+                                            close
+                                        </QuickViewOuter>
+                                        <Product>
+                                            <ProductLayout />
+                                        </Product>
+                                </QuickViewDiv>
+                            </QuickView>
+                </>} */}
     </>
         
     );

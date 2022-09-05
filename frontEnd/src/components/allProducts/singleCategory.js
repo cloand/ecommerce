@@ -11,7 +11,7 @@ const SingleCategory = ({ category, type, index ,allCategories}) => {
     return (
         <>
             <OuterDiv >
-                {(type === "availabilities" || type === "size") && <StockFilters category={category} type={type} index={index} />}
+                {(type === "availabilities" || type === "size" || type === "brands") && <StockFilters category={category} type={type} index={index} />}
                 {type === "product" && <CategoryFilter category={category} type = {type}/>}
                 {category.name !== "Women's Collection" && category.name !== "Out Of Stock" && category.name !== "42mm" && <DivSeperation width={'1px'} />}
             </OuterDiv>

@@ -1,9 +1,11 @@
+import styled from "styled-components";
 import StyledComponents from "styled-components";
 
 export const OuterDiv = StyledComponents.div`
     // border:2px solid black;
     width:100%;
     padding:0 3em;
+    position:relative;
 `; 
 export const SortingBar = StyledComponents.div`
     display:flex;
@@ -24,6 +26,7 @@ export const FilterBox = StyledComponents.div`
     border:2px solid lightgrey;
     padding:.5em .2em .3em .5em;
     border-radius:3px;
+    cursor:pointer;
 `; 
 export const Label = StyledComponents.div`
     
@@ -94,3 +97,23 @@ border-radius:5px;
 padding:.3em .6em;
 margin-right:.5em;
 `
+
+export const Dropper = StyledComponents.div`
+    display:${({check}) => check ? "block" : "none"};
+    position:absolute;
+    top:1.6%;
+    left:13%;
+    width:20%;
+    background:#FAF9F6;
+    z-index:3;
+`;
+export const Selector = StyledComponents.div`
+    padding:.5em 2em;
+    cursor:pointer;
+    &:hover{
+        background:#EDEADE;
+    }
+    font-weight:${({item,sortBy}) => item === sortBy ? "bold" : "normal"};
+`;
+
+

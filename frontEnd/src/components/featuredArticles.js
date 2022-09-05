@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OuterLayout } from "../styles/constantLayout";
 import {OuterDiv,Card,TopImage,BottomSection,Heading,Disc,Button,Label,Icon,TopSection,CardBottom,CardHeading,Date,DateSection,Month} from '../styles/featuredArticlesStyles'
-import { getBlogs } from "../constants/url";
+import { getBlogs,getLatestThreeBlogs} from "../constants/url";
 import { useFetch } from "../customHooks/useFetch";
 import { Link } from "react-router-dom";
 import {changeCurrentDisc} from '../features/blogs/currentBlog'
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import {months} from '../constants/DisplayTexts'
 
 const FeaturedArticles = () => {
-   const [blog] = useFetch(`${getBlogs}`)
+   const [blog] = useFetch(`${getBlogs}${getLatestThreeBlogs}`)
     return(
         <OuterLayout>
             <OuterDiv>

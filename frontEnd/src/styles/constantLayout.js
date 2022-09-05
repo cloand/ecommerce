@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import StyledComponents from "styled-components";
 
 export const OuterLayout = StyledComponents.div`
@@ -38,6 +39,94 @@ background-image:linear-gradient(90deg, rgba(23,4,4,0.9304096638655462) 0%, rgba
   url(${({image}) => image});
 `;
 
+export const CartOnProductHover = StyledComponents.div`
+
+position:absolute;
+height:100%;
+width:100%;
+color:white;
+
+`;
 
 
 
+export const ProductImage = StyledComponents.div`
+    scale:1.5;
+`;
+
+export const ProductImageHover = StyledComponents.div`
+    overflow:hidden;
+    height:80%;
+`;
+
+export const TextHover = StyledComponents.div`
+    background:blue;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:20%;
+    cursor:pointer;
+`;
+
+export const ImageHover = StyledComponents.div`
+    position:absolute;
+    width:100%;
+    height:100%;
+    opacity:0;
+    color:white;
+    z-index:1;
+    overflow:hidden;
+    &:hover{
+        opacity:1;
+    }
+`;
+
+export const Image = StyledComponents.div`
+    padding-bottom:1em;
+    position:relative;
+    overflow:hidden;
+`;
+
+export const ImageOuter = StyledComponents.div`
+    position:relative;
+`;
+
+export const QuickView = StyledComponents.div`
+//     position:absolute;
+//     top:${({top}) => top}px;
+//     height:100vh;
+//     width:100vw;
+//     z-index: ${({isQuickView}) => isQuickView ? "2" : "-1"};
+//    display:flex;
+//    align-items:center;
+//    overflow:hidden;
+`;
+
+export const AbsoluteDiv = StyledComponents.div`
+    position:relative;
+    overflow:hidden;
+
+`;
+
+export const QuickViewOuter = StyledComponents.div`
+    color:black;
+    background:none;
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    font-size:1.9rem;
+    cursor:pointer;
+`;
+
+export const Product = StyledComponents.div`
+    background:white;
+`;
+
+export const Helper = StyledComponents.div`
+    opacity:${({isQuickView}) => isQuickView ? "0.2" : "1"};
+`;
+
+export const QuickViewDiv = StyledComponents.div`
+    // width:65%;
+    // margin:auto;
+`

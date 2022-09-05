@@ -67,15 +67,35 @@ export const Slider = StyledComponents.div`
 `;
 
 export const PriceRange = StyledComponents.div`
+  display:flex;
 `;
 
-export const Text = StyledComponents.div`
+export const Text = StyledComponents.input`
+
 `;
 
 export const Range = StyledComponents.div`
+  display:flex;
+  padding-bottom:1.6em;
+  margin-top:1em;
+`;
+export const SmallText = StyledComponents.div`
+color:grey;
+font-style:italic;
 `;
 
-export const Button = StyledComponents.div`
+export const MinMax = StyledComponents.div`
+
+`;
+
+
+
+export const Button = StyledComponents.button`
+background:black;
+color:white;
+border:none;
+padding:.5em 1.3em;
+margin-top:1em;
 `;
 
 export const Caption = StyledComponents.div`
@@ -96,6 +116,31 @@ border:none;
   cursor:pointer;
   
 `
+
+export const ColorSection = StyledComponents.div`
+padding-right:2em;
+  display:grid;
+  grid-template-columns:repeat(6,1fr)
+  // gap:.1em;
+`
+export const SingleColor = StyledComponents.div`
+  height:31px;
+  width:31px;
+  border-radius:6px;
+  border: 1px solid grey;
+  margin-bottom:.2em;
+  background:${({color}) => color};
+  cursor:pointer;
+`
+
+export const Selected = StyledComponents.div`
+  display:flex;
+  color:brown;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+`
+
 
 
 

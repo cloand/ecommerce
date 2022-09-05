@@ -22,3 +22,7 @@ export const availability = ['In Stock','Out Of Stock'];
 export const cartProduct = [[bagLeft,"Beyond Sky Bag","$189","$189"],[bagLeft,"Beyond Sky Bag","$189", "$189"],[bagLeft,"Beyond Sky Bag","$189", "$189"]]
 
 export const months = { "01":"Jan","02":"Feb","03":"March","04":"April","05":"May","06":"June","07":"July","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"} 
+
+export const colorFilters = ["blue","pink","red","green","white","orange","yellow","grey","black"]
+
+export const sortArray = ['Featured','Best Selling','Alphabatically, A-Z','Alphabatically, Z-A','Price, Low to High','Price, high to low','Date, old to new','Date, new to old']

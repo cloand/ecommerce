@@ -12,19 +12,65 @@ const tagsSort = (productItems) => {
     
     if (productItems.currentCategory[0]) {
         sorted = allItems.filter((item,index) => item.category.includes(productItems.currentCategory[0]))
-   
     }
 
     (productItems.currentTags.availabilities["In Stock"] && productItems.currentTags.availabilities["Out Of Stock"]) ||  (!productItems.currentTags.availabilities["In Stock"] && !productItems.currentTags.availabilities["Out Of Stock"]) ? sorted = sorted : productItems.currentTags.availabilities["In Stock"] ? sorted = sorted.filter((item,index) => item.inStock === true) : sorted = sorted.filter((item,index) => item.inStock === false)
 
     let size = productItems.currentTags.size
+    let sizeResult = [] 
+    let get = true;
 
     Object.entries(size).forEach(([key,value]) => {
         if(value) {
-            sorted = sorted.filter((item,index) => item.size.includes(key))
+            let check = [];
+            check = sorted.filter((item,index) => item.size.includes(key))
+            if(check.length > 0){
+                check.forEach((checker) => {
+                    if(sizeResult.length > 0){
+                        if(sizeResult.includes(checker) === false){
+                            sizeResult.push(checker)
+                        }
+                    }else{
+                        sizeResult.push(checker)
+                    }
+                })
+            }
+            get = false
         }
     })
 
+    if(!get){
+        sorted = sizeResult;
+    }
+
+
+    let color = productItems.currentTags.color
+    let colorResult = [] 
+    let set = true;
+
+    Object.entries(color).forEach(([key,value]) => {
+        if(value) {
+            let check = [];
+            check = sorted.filter((item,index) => item.color.includes(key))
+            if(check.length > 0){
+                check.forEach((checker) => {
+                    if(colorResult.length > 0){
+                        if(colorResult.includes(checker) === false){
+                            colorResult.push(checker)
+                        }
+                    }else{
+                        colorResult.push(checker)
+                    }
+                })
+            }
+            set = false
+        }
+    })
+    // console.log(colorResult,"size")
+    if(!set){
+        sorted = colorResult;
+    }
+    
     productItems.categoriesSort = sorted;
 }
 
@@ -42,9 +88,11 @@ const productItems = {
     currentTags:
         {
             "availabilities" : {"In Stock" : false,"Out Of Stock" : false},
-            "size" : {"XS" : false, "S" : false, "M" : false,"L":false,"XL": false,"XXL":false,"Small":false,"Medium":false,"Large" : false,"Extra Large" : false,"3XL": false,"38mm" : false,"42mm" : false} 
+            "size" : {"XS" : false, "S" : false, "M" : false,"L":false,"XL": false,"XXL":false,"Small":false,"Medium":false,"Large" : false,"Extra Large" : false,"3XL": false,"38mm" : false,"42mm" : false},
+            "color" : {"blue":false,"pink":false,"red":false,"green":false,"white":false,"orange":false,"pink":false,"yellow":false,"grey":false,"black":false},
         },
-    tagsList: []
+    tagsList: [],
+    sortBy:"Alphabatically, A-Z"
 }
 
 const url = `http://localhost:8080${getProductsUrl}`;
@@ -61,12 +109,12 @@ const productSlice = createSlice({
     reducers: {
         checkLoading: (productItems) => {
             productItems.isLoading ? productItems.isLoading = true : productItems.isLoading = false;
-
         },
         deleteTags:(productItems,{payload}) => {
             productItems.tagsList = productItems.tagsList.filter((item,index) => item !== payload)
             let size = productItems.currentTags.size
             let avail = productItems.currentTags.availabilities
+            let color = productItems.currentTags.color
             let check = false;
             Object.entries(size).forEach(item => {
                 if(item[0] === payload){
@@ -82,10 +130,17 @@ const productSlice = createSlice({
                     }
                 })
             }
+            if(!check){
+                Object.entries(color).forEach(item => {
+                    if(item[0] === payload){
+                        productItems.currentTags.color[item[0]] = false;
+                        check = true
+                    }
+                })
+            }
         },
         changeTagChecks: (productItems, { payload }) => {
             // console.log("check")
-          
             if(payload && payload[0] !== "product"){
                     productItems.currentTags[[payload[0]]][payload[1]] = !productItems.currentTags[[payload[0]]][payload[1]]
                 // console.log(productItems.tagsList.includes(payload[2]),"checkernoe")
@@ -147,8 +202,35 @@ const productSlice = createSlice({
 
                 case "availabilities": productItems.categoriesSort = sortByAvailability(payload[1])
                     break
-                default:
+                default: null
             }
+        },
+        sortByPrice:(productItems,{payload}) =>{
+            productItems.categoriesSort = productItems.categoriesSort.filter((item,index) => item.price < payload[1] && item.price > payload[0])
+        },
+        checkSortBy:(productItems,{payload})=>{
+            switch(payload){
+                case "Alphabatically, A-Z" : productItems.categoriesSort.sort((a,b) => a.name.localeCompare(b.name));
+                        break;
+                
+                case "Alphabatically, Z-A" : productItems.categoriesSort.sort((a,b) => b.name.localeCompare(a.name));
+                        break;
+
+                case "Price, Low to High" : productItems.categoriesSort.sort((a,b) => a.price - b.price);
+                        break;
+
+                case "Price, high to low" : productItems.categoriesSort.sort((a,b) => b.price - a.price);
+                        break;
+
+                case "Date, old to new" : productItems.categoriesSort.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+                        break;
+
+                case "Date, new to old" : productItems.categoriesSort.sort((a,b) => new Date(a.createdAt) - new Date(b.createdAt));
+                        break;
+                
+                default: null
+            }
+            productItems.sortBy = payload;
         },
         checkBrand: (productItems, { payload }) => {
             productItems.currentCategory[1] = productItems.items.filter((item) => item.brand === payload)
@@ -198,7 +280,7 @@ const productSlice = createSlice({
         }
     }
 })
-export const { checkLoading, checkCategory, getFeatured, getBestSellers, getSaleProducts, getAllProducts, checkBrand, sortByTags, changeTagChecks,deleteTags,clearFilters } = productSlice.actions;
+export const { checkLoading, checkCategory, getFeatured, getBestSellers, getSaleProducts, getAllProducts, checkBrand, sortByTags, changeTagChecks,deleteTags,clearFilters,checkSortBy,sortByPrice} = productSlice.actions;
 
 export default productSlice.reducer;
 
