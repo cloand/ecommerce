@@ -3,7 +3,7 @@ import StyledComponents from "styled-components";
 export const OuterDiv = StyledComponents.div`
 border:2px solid green;
 width:400px;
-height:93vh;
+height:100vh;
 padding:1.9em 1.5em;
 display:flex;
 flex-direction:column;
@@ -54,6 +54,11 @@ export const Span = StyledComponents.div`
 export const CartButton = StyledComponents.div`
 `;
 export const CheckoutButton = StyledComponents.div`
+    background:black;
+    color:white;
+    padding:.7em 0;
+    text-align:center;
+    border-radius:7px;
 `;
 
 export const LeftImage = StyledComponents.div`

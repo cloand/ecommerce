@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import LandingPage from "./pages/landingPage";
-import { checkLoading,getProducts } from "./features/productFeatures/productSlice";
+import { checkLoading,getBrandList,getCategoryList,getProducts } from "./features/productFeatures/productSlice";
 import { useSelector,useDispatch } from "react-redux";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -17,16 +17,30 @@ import Blog from "./pages/blog";
 import BlogDisc from "./pages/blogDisc";
 import {getBlogCategories} from './features/blogs/currentcategory'
 library.add(fas,faTwitter,faPinterestP,faFacebookF);
+import { changeActive } from "./features/productFeatures/extras";
+import { useFetch } from "./customHooks/useFetch";
 
 function App() {
-  const {items,isLoading} = useSelector((store) => store.products);
+  const {items,isLoading,brandList,categoryList,tagsList} = useSelector((store) => store.products);
   const dispatch = useDispatch();
+  const [brands] = useFetch(`${getBrands}`)
+  const [categories] = useFetch(`${getCategories}`)
 
   useEffect( ()=>{
-    dispatch(getProducts());
+    if(items.length === 0){
+      dispatch(getProducts());
+    }
     dispatch(addLocal());
-    dispatch(getBlogCategories())
-  },[])
+    dispatch(getBlogCategories());
+    dispatch(changeActive(window.location.pathname))
+    if(brands && brandList.length === 0){
+      dispatch(getBrandList(brands))
+    }
+    if(categories && categoryList.length === 0){
+      dispatch(getCategoryList(categories))
+    }
+    // console.log(window.location.pathname,"check path")
+  },[window.location.pathname,brands,categories,tagsList])
 
   
   useEffect(()=>{

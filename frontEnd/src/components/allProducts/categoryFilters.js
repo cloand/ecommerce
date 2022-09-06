@@ -1,42 +1,64 @@
 import React, { useState } from "react";
 import SingleCategory from "./singleCategory";
 import { allSize, availability, colorFilters } from "../../constants/DisplayTexts";
-import { CategorySection, OuterDiv, Category, Heading, Label, Icon, PriceRange, Text, Range, Button, Caption, ColorPallet, DropDownSection, DropButton, AllProducts, SingleColor, ColorSection, Selected, MinMax, SmallText } from "../../styles/allProducts/categoryFiltersStyle";
+import { CategorySection, OuterDiv, Category, Heading, Label, Icon, PriceRange, Text, Range, Button, Caption, ColorPallet, DropDownSection, DropButton, AllProducts, SingleColor, ColorSection, Selected, MinMax, SmallText,BrandOuter,BrandInner,Name,BrandName} from "../../styles/allProducts/categoryFiltersStyle";
 import { DivSeperation } from "../../styles/constantLayout";
 import { checkValue } from "../../features/productFeatures/allProducts/categoryDropdownSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { getBrands, getCategories } from "../../constants/url";
 import { useFetch } from '../../customHooks/useFetch';
-import { changeTagChecks, checkCategory, getAllProducts, sortByPrice } from "../../features/productFeatures/productSlice";
+import { changeTagChecks, checkCategory, getAllProducts, sortByPrice,getBrandList, changeBrandChecker, deleteTags} from "../../features/productFeatures/productSlice";
 import { useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import RangeSlider from 'react-bootstrap-range-slider';
 import MultiRangeSlider from "multi-range-slider-react";
 import '../../styles/css/priceSlider.css'
+import {useParams} from 'react-router-dom'
 
 
 
 const CategoryFilter = () => {
+    const [brandDisplay,setBrandDisplay] = useState(false);
+    const [categoryDisplay,setCategoryDisplay] = useState(false);
     const { categories, availabilities, price, color, size } = useSelector((store) => store.dropper);
     const dispatch = useDispatch();
-    const { currentTags } = useSelector((store) => store.products)
+    const location = useParams();
+    const { currentTags, brandChecker ,brandList} = useSelector((store) => store.products)
     const [allCategories] = useFetch(`${getCategories}`)
     const [brands] = useFetch(`${getBrands}`)
 
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(1000);
+    const [min, setMin] = useState(1000);
+    const [max, setMax] = useState(8000);
     // console.log(categories,"checkk")
 
-    useEffect(() => {
+    // const checkUI = () => {
+    //     if(window.location.pathname.split('/')[1])
+    // }
 
+
+    useEffect(() => {
+        console.log(location,"locationing")
+        // checkUI();
+        if(window.location.pathname.split('/')[1] === "get-categories"){
+            setBrandDisplay(true);
+            setCategoryDisplay(false);
+        }
+        if(window.location.pathname.split('/')[1] === "get-brands"){
+            setBrandDisplay(false);
+            setCategoryDisplay(true);
+        }
+        if(window.location.pathname.split('/')[1] === "get-products"){
+            setBrandDisplay(true);
+            setCategoryDisplay(true);
+        }
     }, [currentTags])
 
     return (
         <>
             <OuterDiv>
                 <DivSeperation width={'3.6px'} />
-                <Category>
+                {categoryDisplay && <Category>
                     <Heading>
                         <Label>
                             Categories
@@ -48,19 +70,19 @@ const CategoryFilter = () => {
                         </DropButton>
                     </Heading>
                     <DropDownSection isDrop={categories}>
-                        <AllProducts onClick={() => {
+                        { (brandDisplay && categoryDisplay) && <AllProducts onClick = {() => {
                             dispatch(getAllProducts());
                             dispatch(checkCategory("Products"));
                         }}>
                             All Products
-                        </AllProducts>
+                        </AllProducts>}
                         {allCategories?.map((category, index) => {
                             return (
                                 <SingleCategory key={index} category={category} type={"product"} index={index} allCategories={allCategories} />
                             );
                         })}
                     </DropDownSection>
-                </Category>
+                </Category>}
                 <DivSeperation width={'3.6px'} />
                 <Category>
                     <Heading>
@@ -101,8 +123,8 @@ const CategoryFilter = () => {
 
                             <MultiRangeSlider
                                 min={0}
-                                max={10000}
-                                step={5}
+                                max={30000}
+                                step={10}
                                 ruler={false}
                                 label={true}
                                 preventWheel={false}
@@ -185,10 +207,10 @@ const CategoryFilter = () => {
                     </DropDownSection>
                 </Category>
                 <DivSeperation width={'3.6px'} />
-                {/* <Category>
+                { brandDisplay && <Category>
                     <Heading>
                         <Label>
-                            Availability
+                            Brands
                         </Label>
                         <DropButton onClick = {() => dispatch(checkValue("availabilities"))}>
                     <Icon className = "material-symbols-outlined">
@@ -200,12 +222,12 @@ const CategoryFilter = () => {
                     {brands?.map((brands,index)=>{
                         return (
                             <>
-                                <SingleCategory key={index} category = {brands} type ={"brands"} index={index} allCategories = {allCategories}/>
+                                <BrandCategory key={index} category = {brands} type ={"brands"} index={index} allCategories = {allCategories}/>
                             </>
                         );
                     })}
                    </DropDownSection>
-                </Category> */}
+                </Category>}
 
             </OuterDiv>
         </>
@@ -215,3 +237,23 @@ const CategoryFilter = () => {
 
 export default CategoryFilter;
 
+const BrandCategory = ({category,index}) => {
+    const dispatch = useDispatch();
+    const {brandChecker} = useSelector((store) => store.products)
+
+    return (
+        <>
+            <BrandOuter onClick={()=>{
+                    console.log('check', category, index)
+                    dispatch(changeBrandChecker(index))
+                    dispatch(changeTagChecks())
+                    // dispatch(deleteTags(category.name))
+                }}>
+                <BrandInner >
+                    <Name type="checkbox" checked={brandChecker[index]} onChange={()=> console.log('changes')}/>
+                       <BrandName >{category.name}</BrandName>
+                </BrandInner>
+            </BrandOuter>
+        </>
+    )
+}

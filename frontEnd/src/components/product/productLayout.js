@@ -1,5 +1,5 @@
 import { DivSeperation, Seperation } from "../../styles/constantLayout";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {OuterDiv,OptionIcon,LeftSection,ImageList,Img,Image,MainImg,RightSection,Heading,Brand,Pricing,Price,Discription,Cart,Icon,Amount,AddToCart,Label,Options,Links,SingleLink,OptionButton,Count,CartIcon,ImgOuter,ChoiceOptions,Labels,Selected,Dropper,Selector,DropIcon,ChoiceWrapper} from "../../styles/product/productLayoutStyle";
 import { useDispatch,useSelector } from "react-redux";
 import {countCounter,changeDropDown,changeCartButton} from '../../features/productFeatures/product/selectedProduct'
@@ -13,14 +13,11 @@ const ProductLayout = () => {
     const item = useSelector((store) => store.selectedProduct) 
     const {selectedImage} = useSelector((store) => store.dropDown)
     const dispatch = useDispatch();
+    let location = useParams()
 
     const [data] = useFetch(`${getProductsUrl}/${item.item._id}`)
     const [image] = useFetch(`${getImages}/${item.item.image}`)
     const [brand] = useFetch(`${getBrands}/${item.item.brand}`)
-
-    useEffect(()=>{
-        console.log(item)
-    },[])
 
 
     return (

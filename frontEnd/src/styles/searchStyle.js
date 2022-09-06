@@ -127,7 +127,6 @@ transition: all .2s ease;
 `;
 
 export const Number = StyledComponents.div`
-    color:black;
     font-weight:bold;
     transition: all .2s ease;
     &:hover{
@@ -146,6 +145,7 @@ transition: all .2s ease;
 export const CartOption = StyledComponents.div`
     display:flex;
     align-items:center;
+    color:${({check}) => check === "Cart" ? "blue" : "black"};
 `;
 
 export const CartLabel = StyledComponents.div`

@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const dropper = {
-    isDrop : false,
-    categories : false,
-    availabilities : false,
-    price : false,
-    color:false,
-    size:false,
+    isDrop : true,
+    categories : true,
+    availabilities : true,
+    price : true,
+    color:true,
+    size:true,
 }
 
 const dropperSlice = createSlice({

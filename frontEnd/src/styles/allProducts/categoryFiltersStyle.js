@@ -141,6 +141,25 @@ export const Selected = StyledComponents.div`
   height:100%;
 `
 
+export const BrandOuter = StyledComponents.div`
+  cursor:pointer;
+`;
+
+export const BrandInner = StyledComponents.div`
+  padding-bottom:.5em;
+  cursor:pointer;
+`;
+
+export const Name = StyledComponents.input`
+cursor:pointer;
+`;
+
+export const BrandName = StyledComponents.label`
+  padding-left:1em;
+  cursor:pointer;
+`;
+
+
 
 
 

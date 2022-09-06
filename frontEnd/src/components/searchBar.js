@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 
 const SearchBar = () => {
     const {count,items,amount} = useSelector((store) => store.cart);
+    const {active} = useSelector((store) => store.dropDown)
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -57,7 +58,7 @@ const SearchBar = () => {
                 </HeartIcon>
             </Heart>
             <Seperation/>
-            <CartOption>
+            <CartOption check = {active}>
                 <CartLeft>
                     <CartLabel>
                         Shopping Cart

@@ -6,8 +6,6 @@ import {useFetch} from '../../customHooks/useFetch'
 
 const Index = () => {
     const [brands] = useFetch(`${getBrands}`)
-    
-
     return(
         <>
         <OuterLayout>

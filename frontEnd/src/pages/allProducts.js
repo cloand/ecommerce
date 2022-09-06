@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/header";
 import NavBar from "../components/navBar";
 import PageHeading from "../components/PageHeading";
@@ -14,15 +14,20 @@ import CartModal from "../components/allProducts/cartModal";
 import ReactModal from 'react-modal'
 import { getCurrentCategoryBlogs } from "../features/blogs/currentcategory";
 import QuickViewModal from "../components/allProducts/quickViewModal";
+import { changeTagChecks, checkByParams } from "../features/productFeatures/productSlice";
+import { useParams } from "react-router";
 
 const AllProducts = () => {
     const {type} = useSelector((store) => store.selectedCategory)
-    const {currentCategory} = useSelector((store) => store.products)
+    const {currentCategory,categoriesSort,items} = useSelector((store) => store.products)
     const {quickView,listViewCart} = useSelector((store) => store.dropDown)
     const dispatch = useDispatch()
+    const location = useParams();
 
     useEffect(()=>{
         window.scrollTo(0,0)
+        console.log(categoriesSort,"check after")
+        
 
         return () => {
             dispatch(changeListViewCart(false))
@@ -31,7 +36,11 @@ const AllProducts = () => {
     },[])
 
     useEffect(()=>{
-    },[quickView])
+        if(items.length > 0){
+            dispatch(checkByParams(location.key))
+            dispatch(changeTagChecks(null))
+        }
+    },[items])
 
     return (
         <>

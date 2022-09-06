@@ -13,13 +13,13 @@ import { changeSelectedNavLink } from "../features/productFeatures/extras";
 
 
 const NavBar = () => {
-    const {selectedNavLink} = useSelector((store) => store.dropDown)
+    const {active} = useSelector((store) => store.dropDown)
 
     return(
     <OuterLayout>
         <OuterDiv>
             <LeftLinks>
-            <Link to={"/"} style = {{textDecoration:"none",color:"black"}} onClick={()=>dispatch(changeSelectedNavLink("Home"))}><WithoutArrow i = {"Home"} activeLink = {selectedNavLink}>
+            <Link to={"/"} style = {{textDecoration:"none",color:"black"}} onClick={()=>dispatch(changeSelectedNavLink("Home"))}><WithoutArrow i = {"Home"} activeLink = {active}>
                     Home
             </WithoutArrow>
             </Link>
@@ -28,7 +28,7 @@ const NavBar = () => {
                     <FontAwesomeIcon icon="fa-solid fa-angle-down" /></WithArrow>
             })}
             <Link to={"/"} style = {{textDecoration:"none",color:"black"}} onClick={()=>dispatch(changeSelectedNavLink("About Us"))} >
-                <WithoutArrow i = {"About Us"} activeLink = {selectedNavLink}>
+                <WithoutArrow i = {"About Us"} activeLink = {active}>
                     AboutUs
                 </WithoutArrow>
             </Link>
@@ -74,32 +74,28 @@ const checkLink = (i) => {
 
 const Category = ({i}) => {
     const [link,setLink] = useState(() => checkLink(i))
-    const {selectedNavLink} = useSelector((store) => store.dropDown)
+    const {active} = useSelector((store) => store.dropDown)
     const dispatch = useDispatch();
 
     return  (<Link to = {link} style = {{textDecoration:"none"}} >
-        {i === "Products" && <SingleLink i = {i} currentActive = {selectedNavLink} onClick={()=> {
+        {i === "Products" && <SingleLink i = {i} currentActive = {active} onClick={()=> {
                 dispatch(checkCategory("Products"));
                 dispatch(getAllProducts());
                 dispatch(clearFilters());
-                dispatch(changeSelectedNavLink(i));
             }}>{i}</SingleLink>}
-        {i === "Categories" && <SingleLink i = {i} currentActive = {selectedNavLink} onClick={()=> {
+        {i === "Categories" && <SingleLink i = {i} currentActive = {active} onClick={()=> {
                 dispatch(checkCategory("All Categories"));
                 dispatch(getAllProducts());
-                dispatch(changeSelectedNavLink(i));
             }}>{i}</SingleLink>}
-            {i === "Brands" && <SingleLink i = {i} currentActive = {selectedNavLink} onClick={()=> {
+            {i === "Brands" && <SingleLink i = {i} currentActive = {active} onClick={()=> {
                 dispatch(checkCategory("All Brands"));
                 dispatch(getAllProducts());
-                dispatch(changeSelectedNavLink(i));
             }}>{i}</SingleLink>}
-        {(i !== "Products" && i!== "Categories" && i!== "Brands")&& <SingleLink i = {i} currentActive = {selectedNavLink} style={{color:"black"}} onClick={()=>{
+        {(i !== "Products" && i!== "Categories" && i!== "Brands")&& <SingleLink i = {i} currentActive = {active} style={{color:"black"}} onClick={()=>{
             if(i==="Blog"){
                 dispatch(changeCurrentBlog("Blogs"));
                 dispatch(getAllBlogs());
                 dispatch(clearFilters());
-                dispatch(changeSelectedNavLink(i));
             }
         }}>{i}</SingleLink>}
     </Link>)

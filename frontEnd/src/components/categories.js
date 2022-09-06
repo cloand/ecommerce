@@ -3,7 +3,7 @@ import React from "react";
 import { OuterLayout } from "../styles/constantLayout";
 import {OuterDiv,TopSection,Heading,BottomSection,Categories,Caption} from "../styles/categoriesStyles";
 import { getCategories } from "../constants/url";
-import { Link } from "react-router-dom";
+import { Link ,NavLink} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkCategory } from "../features/productFeatures/productSlice";
 
@@ -21,7 +21,7 @@ const CategoriesSection = ({categoryName,categories,images}) => {
                     </Heading>
                 </TopSection>
                 <BottomSection>
-                    <Link to={`${getCategories}/${categories[0].slug}`} state={categories[0]} style={{textDecoration:"none",color:"black"}} >
+                    <NavLink to={`${getCategories}/${categories[0].slug}`} state={categories[0]} style={{textDecoration:"none",color:"black"}} className = {({isActive}) => isActive ? 'active' :'inactive'}>
                         <Categories image = {images[0]} onClick={() => {
                         dispatch(checkCategory([categories[0]._id,categories[0].name]));
                     }
@@ -30,7 +30,7 @@ const CategoriesSection = ({categoryName,categories,images}) => {
                             {categories[0].name}
                             </Caption>
                         </Categories>
-                    </Link>
+                    </NavLink>
                     <Link to={`${getCategories}/${categories[1].slug}`} state={categories[1]} style={{textDecoration:"none",color:"black"}} >
                     <Categories image={images[1]}  onClick={() => {
                         dispatch(checkCategory([categories[1]._id,categories[1].name]));

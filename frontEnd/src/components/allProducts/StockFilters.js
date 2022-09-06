@@ -9,10 +9,6 @@ const StockFilters = ({category,type,index}) => {
     
     const {currentTags} = useSelector((store) => store.products)
 
-    useEffect(()=>{
-        console.log()
-    },[])
-
     return (
     
         <OuterDiv >

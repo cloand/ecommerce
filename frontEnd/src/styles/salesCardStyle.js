@@ -16,7 +16,7 @@ border-radius:20px;
 width:32.1%;
 `;
 export const LeftStyleSection = StyledComponents.div`
-padding:2em 17em 2em 2em;
+padding:2em 1em 2em 2em;
 `;
 
 export const Heading = StyledComponents.div`
@@ -64,6 +64,7 @@ padding:1em;
 margin:0 4.2em;
 margin-top:.4em;
 cursor:pointer;
+width:56%;
 `;
 
 export const RightStyleSection = StyledComponents.div`

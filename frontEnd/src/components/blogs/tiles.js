@@ -9,7 +9,6 @@ const Tiles = ({blogs}) => {
 
     return (
         <>
-        
             <OuterDiv>
                 {!isLoading && currentBlogs?.map((item,index)=>{
                     return <SingleTile key = {index} item = {item} />

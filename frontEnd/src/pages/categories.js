@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 const Categories = () => {
     const {currentCategory} = useSelector((store) => store.products);
+    
     return(
         <>
             <Header />

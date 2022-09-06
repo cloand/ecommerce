@@ -13,13 +13,17 @@ import { changeSortByDrop } from '../../features/productFeatures/extras';
 
 const SortedProducts = () => {
     const {view} = useSelector((store) => store.simpleSort);
-    const {categoriesSort,tagsList,sortBy} = useSelector((store)=> store.products)
+    const {categoriesSort,tagsList,sortBy,displaySort} = useSelector((store)=> store.products)
     const {sortByDrop} = useSelector((store) => store.dropDown)
     const dispatch = useDispatch();
 
-  useEffect(() => {
 
-  },[tagsList,categoriesSort,sortBy])
+    console.log('rendered', displaySort)
+
+    useEffect(()=>{
+
+    },[tagsList])
+ 
 
     return (
         <OuterDiv>
