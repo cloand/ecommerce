@@ -6,7 +6,6 @@ import {OuterDiv,HeadCaption,HeadSpan,Heading,Caption,Button,Label,Icon} from '.
 import clothes from "../assets/clothes.jpeg"
 import { Link } from "react-router-dom";
 import { getProductsUrl } from "../constants/url";
-import {changeCurrentCategory} from '../features/productFeatures/product/selectedCategory'
 import { checkCategory, getAllProducts } from "../features/productFeatures/productSlice";
 
 const SeasonSale = () => {

@@ -19,6 +19,7 @@ import {getBlogCategories} from './features/blogs/currentcategory'
 library.add(fas,faTwitter,faPinterestP,faFacebookF);
 import { changeActive } from "./features/productFeatures/extras";
 import { useFetch } from "./customHooks/useFetch";
+import Search from "./pages/search";
 
 function App() {
   const {items,isLoading,brandList,categoryList,tagsList} = useSelector((store) => store.products);
@@ -69,6 +70,7 @@ function App() {
             <Route path={`:key`} element = {<BlogDisc />} />
           </Route>
           <Route path="cart" element = {<Cart />} />
+          <Route path="search" element={<Search />} />
         </Routes>
         {/* <CartSideBar /> */}
         </>

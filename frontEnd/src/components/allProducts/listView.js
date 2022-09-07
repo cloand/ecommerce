@@ -27,7 +27,7 @@ const ListView = ({items}) => {
         <>
             <OuterDiv>
                 <ImageOuter>
-            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none"}} onClick={() => {
+            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none"}} state={{"_id":items._id}} onClick={() => {
                                 dispatch(changeProduct(items));
                                 dispatch(changeDropDown(null));
                             }}>
@@ -35,7 +35,7 @@ const ListView = ({items}) => {
                 </Link>
                 </ImageOuter>
                 <RightSection>
-                    <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none",color:"inherit"}} onClick={() => {
+                    <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none",color:"inherit"}} state={{"_id":items._id}} onClick={() => {
                                 dispatch(changeProduct(items));
                                 dispatch(changeDropDown(null));
                             }}>

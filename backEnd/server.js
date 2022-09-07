@@ -18,13 +18,14 @@ const category = require('./routes/categoryRoutes')
 const brand = require('./routes/brandRoutes')
 const blog = require('./routes/blogRoutes')
 const image = require('./routes/imageRoutes')
+const search = require('./routes/searchRoutes')
 
 app.use('/get-brands',brand)
 app.use('/get-categories',category)
 app.use('/get-blogs',blog)
 app.use('/get-products',product)
 app.use('/get-images',image)
-
+app.use('/search',search)
 
 
 

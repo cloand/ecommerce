@@ -25,7 +25,7 @@ export default TilesDisplay;
 const SingleTile = ({item,current,index}) => {
     const dispatch = useDispatch()
 
-    console.log(current,'currentig')
+    // console.log(current,'currentig')
 
     return(
         <>
@@ -33,7 +33,7 @@ const SingleTile = ({item,current,index}) => {
                 <InnerDiv onClick={()=> {
                     
                     if(current===getBrands){
-                        dispatch(changeBrandChecker(index))
+                        dispatch(changeBrandChecker([index,false]))
                         dispatch(changeTagChecks(null))
                     }else{
                         dispatch(checkCategory([item._id,item.name,current]));

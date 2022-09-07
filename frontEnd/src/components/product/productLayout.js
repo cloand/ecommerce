@@ -1,5 +1,5 @@
 import { DivSeperation, Seperation } from "../../styles/constantLayout";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {OuterDiv,OptionIcon,LeftSection,ImageList,Img,Image,MainImg,RightSection,Heading,Brand,Pricing,Price,Discription,Cart,Icon,Amount,AddToCart,Label,Options,Links,SingleLink,OptionButton,Count,CartIcon,ImgOuter,ChoiceOptions,Labels,Selected,Dropper,Selector,DropIcon,ChoiceWrapper} from "../../styles/product/productLayoutStyle";
 import { useDispatch,useSelector } from "react-redux";
 import {countCounter,changeDropDown,changeCartButton} from '../../features/productFeatures/product/selectedProduct'
@@ -13,15 +13,26 @@ const ProductLayout = () => {
     const item = useSelector((store) => store.selectedProduct) 
     const {selectedImage} = useSelector((store) => store.dropDown)
     const dispatch = useDispatch();
-    let location = useParams()
+    let location = useLocation()
+    // console.log(location.state._id,"location")
+    
+    const checker = item.item._id;
+    console.log(location,'loc') 
+    
+    if(location.state){
+        checker = location.state._id;
+    }
+   
 
-    const [data] = useFetch(`${getProductsUrl}/${item.item._id}`)
-    const [image] = useFetch(`${getImages}/${item.item.image}`)
-    const [brand] = useFetch(`${getBrands}/${item.item.brand}`)
+    const [data] = useFetch(`${getProductsUrl}/${checker}`)
+    const [image] = useFetch(`${getImages}/${data?.image}`)
+    const [brand] = useFetch(`${getBrands}/${data?.brand}`)
 
+   
 
-    return (
-        <>
+        if(data && image && brand){
+            return (
+                <>
             <OuterDiv>
                 <LeftSection>
                         <ImageList>
@@ -148,7 +159,12 @@ const ProductLayout = () => {
                 </RightSection>
             </OuterDiv>
         </>
-    );
+            )
+        }
+
+     
+        
+    
 }
 
 export default ProductLayout;

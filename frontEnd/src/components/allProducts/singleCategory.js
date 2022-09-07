@@ -25,7 +25,7 @@ const CategoryFilter = ({ category,type }) => {
     const dispatch = useDispatch();
     const { currentCategory } = useSelector((store) => store.products)
 
-    console.log(currentCategory,"current category")
+    // console.log(currentCategory,"current category")
     return (
         <>
             {category.type === "product" && 

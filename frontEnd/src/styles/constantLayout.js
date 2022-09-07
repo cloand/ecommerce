@@ -66,6 +66,7 @@ export const TextHover = StyledComponents.div`
     align-items:center;
     height:20%;
     cursor:pointer;
+    z-index:4;
 `;
 
 export const ImageHover = StyledComponents.div`

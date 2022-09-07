@@ -26,7 +26,7 @@ const GridView = ({items}) => {
                 <ImageOuter>
                         <Image>
                             <ImageHover>
-                            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none"}} onClick={() => {
+                            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none"}} state={{"_id":items._id}} onClick={() => {
                                 dispatch(changeProduct(items));
                                 dispatch(changeDropDown(null));
                             }}>
@@ -49,7 +49,7 @@ const GridView = ({items}) => {
                     </ImageOuter>
                     <BottomSection>
                         <Brand>
-                            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none",color:"inherit"}} onClick={() => {
+                            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none",color:"inherit"}} state={{"_id":items._id}} onClick={() => {
                                 // console.log({item},'test')
                                 dispatch(changeProduct(items));
                                 dispatch(changeDropDown(null));
@@ -59,7 +59,7 @@ const GridView = ({items}) => {
                             </Link>
                         </Brand>
                         <Name>
-                            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none",color:"inherit"}} onClick={() => {
+                            <Link to = {`${getProductsUrl}/${items.slug}`} style = {{textDecoration:"none",color:"inherit"}} state={{"_id":items._id}} onClick={() => {
                                 // console.log({item},'test')
                                 dispatch(changeProduct(items));
                                 dispatch(changeDropDown(null));

@@ -14,7 +14,7 @@ const ProductSection = () => {
     useEffect(()=>{
         return () => {
             changeDropDown(null)
-            console.log("changed")
+            // console.log("changed")
         }
     },[])
 

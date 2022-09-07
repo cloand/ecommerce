@@ -35,7 +35,7 @@ const ProductList = ({disc}) => {
     const {name,price} = disc;
 
     return (
-        <Link to={`${getProductsUrl}/${disc.slug}`} state={disc} onClick={() => {
+        <Link to={`${getProductsUrl}/${disc.slug}`} state={{"_id":disc._id}} onClick={() => {
                 dispatch(changeProduct(disc));
                 dispatch(changeDropDown(null));
             }} style={{textDecoration:"none",color:"black"}}>

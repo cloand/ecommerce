@@ -24,6 +24,7 @@ export const Heading = StyledComponents.div`
     font-weight:bold;
     font-size:4rem;
     padding-bottom:.2em;
+    text-transform:capitalize;
 `;
 
 export const Subtitle = StyledComponents.div`

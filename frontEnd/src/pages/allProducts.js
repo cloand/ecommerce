@@ -14,11 +14,13 @@ import CartModal from "../components/allProducts/cartModal";
 import ReactModal from 'react-modal'
 import { getCurrentCategoryBlogs } from "../features/blogs/currentcategory";
 import QuickViewModal from "../components/allProducts/quickViewModal";
-import { changeTagChecks, checkByParams } from "../features/productFeatures/productSlice";
+import { changeTagChecks, checkByParams,clearAll } from "../features/productFeatures/productSlice";
 import { useParams } from "react-router";
+import { changeFilters } from "../features/productFeatures/allProducts/categoryFilters";
+import { changeCategory } from "../features/productFeatures/allProducts/currentCategory";
 
 const AllProducts = () => {
-    const {type} = useSelector((store) => store.selectedCategory)
+    const {category} = useSelector((store)=> store.currentCategory)
     const {currentCategory,categoriesSort,items} = useSelector((store) => store.products)
     const {quickView,listViewCart} = useSelector((store) => store.dropDown)
     const dispatch = useDispatch()
@@ -26,14 +28,24 @@ const AllProducts = () => {
 
     useEffect(()=>{
         window.scrollTo(0,0)
-        console.log(categoriesSort,"check after")
-        
-
         return () => {
             dispatch(changeListViewCart(false))
             dispatch(changeQuickView(false))
         }
     },[])
+
+    useEffect(()=>{
+        dispatch(clearAll())
+        let loc = window.location.pathname;
+        if(loc.split('/')[1] === 'get-products'){
+            dispatch(changeFilters(['brand',true]));
+            dispatch(changeFilters(['category',true]));
+            dispatch(changeCategory('All Products'))
+        }
+        if(loc.split('/')[1] === 'get-brands' || loc.split('/')[1] === 'get-categories'){
+            dispatch(changeCategory(loc.split('/').at(-1)))
+        }
+    },[window.location.pathname])
 
     useEffect(()=>{
         if(items.length > 0){
@@ -82,7 +94,7 @@ const AllProducts = () => {
                     <Header />
                     <SearchBar />
                     <NavBar />
-                    <PageHeading subHeading = {'CATEGORIES'} heading = {currentCategory[1]} subtitle = {"Products"} iconName = {"home"}/>
+                    <PageHeading subHeading = {'CATEGORIES'} heading = {category} subtitle = {"Products"} iconName = {"home"}/>
                     <ProductSection />
                     <Footer />
                 </Helper>

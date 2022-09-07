@@ -8,6 +8,8 @@ export const OuterDiv = StyledComponents.div`
     // align-items:center;
     color: rgb(56,56,56);
     padding:1.8em 0;
+    position:relative;
+    overflow:visible;
 `;
 
 export const IconText = StyledComponents.div`
@@ -41,6 +43,7 @@ export const InputText = StyledComponents.input`
     border:0;
     width:80%;
     padding:0 1em;
+    color:grey;
     &:focus{
         outline:none;
     }
@@ -150,6 +153,60 @@ export const CartOption = StyledComponents.div`
 
 export const CartLabel = StyledComponents.div`
     font-size:.7em;
+`;
+
+export const DropInner = StyledComponents.div`
+`;
+
+export const SearchDrop = StyledComponents.div`
+position:absolute;
+background:white;
+left:14.5%;
+top:80%;
+right:35%;
+z-index:1;
+max-height:400px;
+overflow:scroll;
+overflow-x:hidden;
+&::-webkit-scrollbar{
+    width:5px;
+    background:white;
+    margin-right:.5em;
+}
+&::-webkit-scrollbar-thumb{
+    background:grey;
+    border-radius:5px;
+}
+`;
+
+export const SearchDiv = StyledComponents.div`
+display:flex;
+align-items:center;
+`;
+
+export const LeftImage = StyledComponents.img`
+width:20%;
+height:auto;
+`;
+
+export const RightSection = StyledComponents.div`
+
+`;
+
+export const Name = StyledComponents.div`
+`;
+
+export const Review = StyledComponents.div`
+display:flex;
+padding-bottom:1em;
+`;
+
+export const Star = StyledComponents.div`
+font-color:#d6d6d6;
+`;
+
+export const Price = StyledComponents.div`
+font-weight:bold;
 `;
 
 

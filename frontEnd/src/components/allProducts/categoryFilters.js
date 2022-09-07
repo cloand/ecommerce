@@ -15,12 +15,12 @@ import RangeSlider from 'react-bootstrap-range-slider';
 import MultiRangeSlider from "multi-range-slider-react";
 import '../../styles/css/priceSlider.css'
 import {useParams} from 'react-router-dom'
+import { changeFilters } from "../../features/productFeatures/allProducts/categoryFilters";
 
 
 
 const CategoryFilter = () => {
-    const [brandDisplay,setBrandDisplay] = useState(false);
-    const [categoryDisplay,setCategoryDisplay] = useState(false);
+    const {category,brand} = useSelector((store) => store.categoryFilters)
     const { categories, availabilities, price, color, size } = useSelector((store) => store.dropper);
     const dispatch = useDispatch();
     const location = useParams();
@@ -38,19 +38,19 @@ const CategoryFilter = () => {
 
 
     useEffect(() => {
-        console.log(location,"locationing")
+        // console.log(location,"locationing")
         // checkUI();
         if(window.location.pathname.split('/')[1] === "get-categories"){
-            setBrandDisplay(true);
-            setCategoryDisplay(false);
+            dispatch(changeFilters(['brand',true]));
+            dispatch(changeFilters(['category',false]));
         }
         if(window.location.pathname.split('/')[1] === "get-brands"){
-            setBrandDisplay(false);
-            setCategoryDisplay(true);
+            dispatch(changeFilters(['brand',false]));
+            dispatch(changeFilters(['category',true]));
         }
         if(window.location.pathname.split('/')[1] === "get-products"){
-            setBrandDisplay(true);
-            setCategoryDisplay(true);
+            dispatch(changeFilters(['brand',true]));
+            dispatch(changeFilters(['category',true]));
         }
     }, [currentTags])
 
@@ -58,7 +58,7 @@ const CategoryFilter = () => {
         <>
             <OuterDiv>
                 <DivSeperation width={'3.6px'} />
-                {categoryDisplay && <Category>
+                {category && <Category>
                     <Heading>
                         <Label>
                             Categories
@@ -70,7 +70,7 @@ const CategoryFilter = () => {
                         </DropButton>
                     </Heading>
                     <DropDownSection isDrop={categories}>
-                        { (brandDisplay && categoryDisplay) && <AllProducts onClick = {() => {
+                        { (brand && category) && <AllProducts onClick = {() => {
                             dispatch(getAllProducts());
                             dispatch(checkCategory("Products"));
                         }}>
@@ -207,7 +207,7 @@ const CategoryFilter = () => {
                     </DropDownSection>
                 </Category>
                 <DivSeperation width={'3.6px'} />
-                { brandDisplay && <Category>
+                { brand && <Category>
                     <Heading>
                         <Label>
                             Brands
@@ -244,7 +244,7 @@ const BrandCategory = ({category,index}) => {
     return (
         <>
             <BrandOuter onClick={()=>{
-                    console.log('check', category, index)
+                    // console.log('check', category, index)
                     dispatch(changeBrandChecker(index))
                     dispatch(changeTagChecks())
                     // dispatch(deleteTags(category.name))

@@ -1,18 +1,26 @@
 import React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import flipcart from "../assets/flipcart.png"
-import {OuterDiv,IconOuter,Icon,IconText,Search,CallIcon,CallDisc,CaptionText,Number,CartIcon,InputText,SearchIcon,RightLinks,Call,Heart,HeartIcon,CartOption,CartLeft,CartLabel} from "../styles/searchStyle";
+import {OuterDiv,IconOuter,Icon,IconText,Search,CallIcon,CallDisc,CaptionText,Number,CartIcon,InputText,SearchIcon,RightLinks,Call,Heart,HeartIcon,CartOption,CartLeft,CartLabel,DropInner,SearchDrop,SearchDiv,LeftImage,RightSection,Name,Review,Star,Price} from "../styles/searchStyle";
 import { OuterLayout,Seperation} from "../styles/constantLayout";
 import { useSelector,useDispatch} from "react-redux";
 import { useEffect } from "react";
 import { calculateValues } from "../features/productFeatures/cart/cartSlice";
 import { Link } from "react-router-dom";
-
+import { changeActive } from "../features/productFeatures/extras";
+import { changeQuery } from "../features/search/search";
+import { getDataGroupBy } from "rsuite/esm/utils";
+import { getSearchQuery } from "../extras/searchQuery";
+import { getImages } from "../constants/url";
+import { getProductsUrl } from "../constants/url";
+import {useFetch} from '../customHooks/useFetch'
 
 
 const SearchBar = () => {
     const {count,items,amount} = useSelector((store) => store.cart);
     const {active} = useSelector((store) => store.dropDown)
+    const {query} = useSelector((store) => store.search)
+    const [data] = useFetch(`${getProductsUrl}?name=${query}`)
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -32,11 +40,23 @@ const SearchBar = () => {
 
         </IconOuter>
         <Search>
-            <InputText placeholder={"Search In..."}/>
+            <InputText placeholder={"Search In..."} value={query} onChange={(e) => {
+                dispatch(changeQuery(['value',e.target.value]));
+                dispatch(changeQuery(['data',data]))
+                }}/>
+            <Link to="/search">
              <SearchIcon>
                 <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" style={{width:"40px",height:"20px",color:"black"}}/>
              </SearchIcon>
-        </Search>
+             </Link>
+       </Search>
+        {query !== '' && <SearchDrop>
+            <DropInner>
+                {data?.map((item,index) => {
+                    return <SearchTile item = {item} key = {index}/>
+                })}
+            </DropInner>
+        </SearchDrop>}
         <RightLinks>
             <Call>
                 <CallIcon>
@@ -58,7 +78,8 @@ const SearchBar = () => {
                 </HeartIcon>
             </Heart>
             <Seperation/>
-            <CartOption check = {active}>
+            <Link to = "/cart" style = {{textDecoration:"none",color:"inherit"}}>
+            <CartOption check = {active} onClick={()=>dispatch(changeActive("/cart"))}>
                 <CartLeft>
                     <CartLabel>
                         Shopping Cart
@@ -67,12 +88,12 @@ const SearchBar = () => {
                         ${amount}
                     </Number>
                 </CartLeft>
-               <Link to = "/cart">
+               
                     <CartIcon count = {count}>
                         <FontAwesomeIcon icon="fa-solid fa-cart-shopping" style = {{width:"30px",height:"40px",color:"black"}}/>
                     </CartIcon>
-                </Link>
             </CartOption>
+                </Link>
         </RightLinks>
     </OuterDiv>
     </OuterLayout>
@@ -80,3 +101,41 @@ const SearchBar = () => {
 }
 
 export default SearchBar;
+
+const SearchTile = ({item}) => {
+    const [image] = useFetch(`${getImages}/${item.image}`)
+
+    return (
+        <>
+            <SearchDiv>
+                <LeftImage src={image?.image[0]} />
+                <RightSection>
+                    <Name>
+                        {item.name}
+                    </Name>
+                    <Review>
+                        <Star className="material-symbols-outlined">
+                            star
+                        </Star>
+                        <Star className="material-symbols-outlined">
+                            star
+                        </Star>
+                        <Star className="material-symbols-outlined">
+                            star
+                        </Star>
+                        <Star className="material-symbols-outlined">
+                            star
+                        </Star>
+                        <Star className="material-symbols-outlined">
+                            star
+                        </Star>
+                    </Review>
+                    <Price>
+                        ${item.price}
+                    </Price>
+                </RightSection>
+            </SearchDiv>
+        </>
+
+    )
+}

@@ -18,7 +18,7 @@ const SortedProducts = () => {
     const dispatch = useDispatch();
 
 
-    console.log('rendered', displaySort)
+    // console.log('rendered', displaySort)
 
     useEffect(()=>{
 

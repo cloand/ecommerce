@@ -91,7 +91,7 @@ const Category = ({i}) => {
                 dispatch(checkCategory("All Brands"));
                 dispatch(getAllProducts());
             }}>{i}</SingleLink>}
-        {(i !== "Products" && i!== "Categories" && i!== "Brands")&& <SingleLink i = {i} currentActive = {active} style={{color:"black"}} onClick={()=>{
+        {(i !== "Products" && i!== "Categories" && i!== "Brands")&& <SingleLink i = {i} currentActive = {active} onClick={()=>{
             if(i==="Blog"){
                 dispatch(changeCurrentBlog("Blogs"));
                 dispatch(getAllBlogs());

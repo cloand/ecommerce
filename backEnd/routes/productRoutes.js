@@ -4,9 +4,19 @@ const Product = require('../schema/productSchema')
 
 // get all products
 routes.get('/', async(req,res)=>{
+    console.log(req.query)
+    const product = await Product.find()
     try{
-        const product = await Product.find()
-        res.json(product)
+        if(!Object.values(req.query).every(x => x === null || x === '')){
+            let filtered = [];
+            if(req.query.hasOwnProperty('name')){
+                filtered = product.filter((item,index) => (item.slug.match(req.query['name']) || item.slug.match(req.query['name'])))
+            }
+            res.json(filtered)
+        }else{
+            console.log('entere not')
+            res.json(product)
+        }
     }catch(e){
         res.status(400).json({message:e.message})
     }

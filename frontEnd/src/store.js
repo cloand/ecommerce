@@ -4,10 +4,12 @@ import dropperReducer from "./features/productFeatures/allProducts/categoryDropd
 import simpleSortReducer from "./features/productFeatures/allProducts/simpleSortsSlice"
 import selectedProductReducer from "./features/productFeatures/product/selectedProduct"
 import cartReducer from './features/productFeatures/cart/cartSlice'
-import selectedCategoryReducer from "./features/productFeatures/product/selectedCategory";
 import currentBlogReducer from "./features/blogs/currentBlog";
 import currentCategoryBlogReducer from "./features/blogs/currentcategory"
 import dropDownReducer from "./features/productFeatures/extras";
+import filterReducer from './features/productFeatures/allProducts/categoryFilters'
+import categoryReducer from './features/productFeatures/allProducts/currentCategory'
+import searchReducer from './features/search/search'
 
 
 
@@ -18,10 +20,12 @@ const store = configureStore({
         products : productReducer,
         selectedProduct : selectedProductReducer,
         cart:cartReducer,
-        selectedCategory:selectedCategoryReducer,
         currentBlog:currentBlogReducer,
         currentBlogCategory: currentCategoryBlogReducer,
-        dropDown : dropDownReducer
+        dropDown : dropDownReducer,
+        categoryFilters:filterReducer,
+        currentCategory:categoryReducer,
+        search:searchReducer
     },
 })
 

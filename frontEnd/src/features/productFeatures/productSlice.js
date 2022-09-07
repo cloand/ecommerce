@@ -92,8 +92,8 @@ const tagsSort = (productItems) => {
 
     productItems.categoriesSort = sorted;
     productItems.displaySort = sorted;
-    console.log(productItems.categoriesSort,"pending states")
-    console.log("running again")
+    // console.log(productItems.categoriesSort,"pending states")
+    // console.log("running again")
 }
 
 const productItems = {
@@ -125,7 +125,7 @@ const url = `http://localhost:8080${getProductsUrl}`;
 
 export const getProducts = createAsyncThunk(`${getProductsUrl}`, () => {
     return axios.get(url).then(({ data }) => {
-        console.log('check on data')
+        // console.log('check on data')
         return data
     }).catch((err) => console.log(err))
 })
@@ -138,7 +138,7 @@ const productSlice = createSlice({
             productItems.isLoading ? productItems.isLoading = true : productItems.isLoading = false;
         },
         deleteTags: (productItems, { payload }) => {
-            console.log("check delete")
+            // console.log("check delete")
             productItems.tagsList = productItems.tagsList.filter((item, index) => item !== payload)
             let size = productItems.currentTags.size
             let avail = productItems.currentTags.availabilities
@@ -176,7 +176,7 @@ const productSlice = createSlice({
         },
         checkByParams: (productItems, { payload }) => {
             let check = false;
-            console.log("check params run")
+            // console.log("check params run")
             productItems.brandList.forEach((brand, index) => {
                 if (brand.slug === payload) {
                     productItems.brandChecker[index] = true;
@@ -195,7 +195,7 @@ const productSlice = createSlice({
                     }
                 })
             }
-            console.log( current(productItems.currentCategory),"check immer")
+            // console.log( current(productItems.currentCategory),"check immer")
         },
         changeTagChecks: (productItems, { payload }) => {
             if (payload && payload[0] !== "product") {
@@ -206,7 +206,7 @@ const productSlice = createSlice({
                 ) : productItems.tagsList.push(payload[1])
                 // console.log(current(productItems.tagsList,"taglist"))
             }
-            console.log("running tag checks")
+            // console.log("running tag checks")
             tagsSort(productItems)
 
         },
@@ -283,11 +283,19 @@ const productSlice = createSlice({
             productItems.categoryList = payload;
         },
         changeBrandChecker: (productItems, { payload }) => {
-            productItems.brandChecker[payload] = !productItems.brandChecker[payload];
-            if (!productItems.tagsList.includes(productItems.brandList[payload].name)) {
-                productItems.tagsList.push(productItems.brandList[payload].name)
-            } else {
-                productItems.tagsList.splice(productItems.tagsList.indexOf(productItems.brandList[payload].name), 1)
+            // console.log(typeof payload,'new check')
+            if(typeof payload === "object"){
+                productItems.brandChecker.forEach((item,index) => productItems.brandChecker[index] = false)
+                productItems.brandChecker[payload] = !productItems.brandChecker[payload];
+                // console.log(current(productItems.brandChecker,'check items params'))
+            }else{
+
+                productItems.brandChecker[payload] = !productItems.brandChecker[payload];
+                if (!productItems.tagsList.includes(productItems.brandList[payload].name)) {
+                    productItems.tagsList.push(productItems.brandList[payload].name)
+                } else {
+                    productItems.tagsList.splice(productItems.tagsList.indexOf(productItems.brandList[payload].name), 1)
+                }
             }
         }
         ,
@@ -353,6 +361,17 @@ const productSlice = createSlice({
         },
         getFilteredProducts: (productItems, { payload }) => {
             // const check = productItems.items.filter((item) => );
+        },
+        clearAll:(productItems)=>{
+            productItems.brandChecker.forEach((item,index) => {
+                productItems.brandChecker[index] = false;
+            })
+            Object.entries(productItems.currentTags).forEach((category) => {
+              Object.entries(productItems.currentTags[category[0]]).forEach((values) => {
+                    productItems.currentTags[category[0]][values[0]] = false;
+              })
+            })
+            productItems.tagsList.length = 0;
         }
     },
     extraReducers: {
@@ -370,7 +389,7 @@ const productSlice = createSlice({
         }
     }
 })
-export const { checkLoading, checkCategory, getFeatured, getBestSellers, getSaleProducts, getAllProducts, checkBrand, sortByTags, changeTagChecks, deleteTags, clearFilters, checkSortBy, sortByPrice, getBrandList, changeBrandChecker, getCategoryList,checkByParams} = productSlice.actions;
+export const { checkLoading, checkCategory, getFeatured, getBestSellers, getSaleProducts, getAllProducts, checkBrand, sortByTags, changeTagChecks, deleteTags, clearFilters, checkSortBy, sortByPrice, getBrandList, changeBrandChecker, getCategoryList,checkByParams,clearAll} = productSlice.actions;
 
 export default productSlice.reducer;
 

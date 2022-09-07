@@ -63,7 +63,7 @@ const ProductCard = ({arr}) => {
                 <ImageOuter>
                         <Image>
                             <ImageHover>
-                            <Link to = {`${getProductsUrl}/${arr.slug}`} style = {{textDecoration:"none"}} state={arr} onClick={() => {
+                            <Link to = {`${getProductsUrl}/${arr.slug}`} style = {{textDecoration:"none"}} state={{"_id":arr._id}} onClick={() => {
                                 dispatch(changeProduct(arr));
                                 dispatch(changeDropDown(null));
                             }}>
@@ -90,7 +90,7 @@ const ProductCard = ({arr}) => {
                         </Type>}
                     
                     <Name>
-                    <Link to = {`${getProductsUrl}/${arr.slug}`} style = {{textDecoration:"none",color:"inherit"}} state={arr} onClick={() => {
+                    <Link to = {`${getProductsUrl}/${arr.slug}`} style = {{textDecoration:"none",color:"inherit"}} state={{"_id":arr._id}} onClick={() => {
                                 dispatch(changeProduct(arr));
                                 dispatch(changeDropDown(null));
                             }}>
